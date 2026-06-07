@@ -14,20 +14,20 @@ Users answer 12 policy statements (Yeah / Mostly yeah / Dunno / Mostly nah / Nah
 
 This repo is public so anyone can audit how the tool works:
 
-- **Questions** — `QUESTIONS` in [`vite-project/src/YeahNahMaybe.jsx`](vite-project/src/YeahNahMaybe.jsx)
-- **Party positions** — `PARTY_DATA` (scores 1–5 per statement per party)
-- **Scoring algorithm** — `calcResults()` (weighted distance from user answers to party scores; important flags double the weight)
-- **Tua's behaviour** — `SYSTEM_PROMPT` (rules for the AI assistant)
+- **Questions:** `QUESTIONS` in [`vite-project/src/YeahNahMaybe.jsx`](vite-project/src/YeahNahMaybe.jsx)
+- **Party positions:** `PARTY_DATA` (scores 1–5 per statement per party)
+- **Scoring algorithm:** `calcResults()` (weighted distance from user answers to party scores; important flags double the weight)
+- **Tua's behaviour:** `SYSTEM_PROMPT` (rules for the AI assistant)
 
 The tool offers voter advice. It does not endorse any party.
 
-Party scores in `PARTY_DATA` are editorial judgments based on publicly stated positions — they will be updated as policies shift. If something looks wrong, open an issue or submit a PR.
+Party scores in `PARTY_DATA` are editorial judgments based on publicly stated positions. They will be updated as policies shift. If something looks wrong, open an issue or submit a PR.
 
 ## Tech stack
 
-- React 19 + Vite 7 — single-page app, inline styles only
-- GitHub Pages — static hosting
-- Cloudflare Worker — proxies chat requests to Anthropic; API key is stored as a Cloudflare secret, not in this repo
+- React 19 + Vite 7: single-page app, inline styles only
+- GitHub Pages: static hosting
+- Cloudflare Worker: proxies chat requests to Anthropic; API key is stored as a Cloudflare secret, not in this repo
 
 ## Local development
 
@@ -60,4 +60,4 @@ The frontend deploys automatically via GitHub Actions on push to `main`. Enable 
 
 ## About
 
-Created by Thomas Le Bas — a Kiwi designer in London helping others engage with NZ politics.
+Created by Thomas Le Bas, a Kiwi designer in London helping others engage with NZ politics.

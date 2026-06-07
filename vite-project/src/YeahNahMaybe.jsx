@@ -52,8 +52,8 @@ PARTY POSITIONS ON KEY STATEMENTS (score 1-5, where 5 = strongly agree):
 YOUR RULES:
 - Never tell the user who to vote for
 - Never express a preference for any party
-- Be direct and conversational — write like a knowledgeable friend, not a textbook
-- Keep responses short — 2 to 3 sentences by default. Only go longer if the person explicitly asks for more detail.
+- Be direct and conversational. Write like a knowledgeable friend, not a textbook
+- Keep responses short: 2 to 3 sentences by default. Only go longer if the person explicitly asks for more detail.
 - No bullet points or lists. Write in prose.
 - Keep sentences short. No exclamation marks. No filler phrases.
 - Do not end responses with follow-up questions or invitations to keep talking. Let the person lead.
@@ -181,7 +181,7 @@ function ResultBubbles({ results, theme, dark, onCopy }) {
     return () => { clearTimeout(t1); };
   }, []);
 
-  const mt = "My political party matches for 2026:\n\n" + results.parties.map((p) => `${p.emoji} ${p.name} — ${p.pct}%`).join("\n") + "\n\nFind out yours → www.yeahnahmaybe.nz";
+  const mt = "My political party matches for 2026:\n\n" + results.parties.map((p) => `${p.emoji} ${p.name}: ${p.pct}%`).join("\n") + "\n\nFind out yours → www.yeahnahmaybe.nz";
 
   const bs = { maxWidth:"82%", background: theme.BUBBLE, color: theme.DARK, borderRadius:"5px 20px 20px 20px", padding:"9px 14px", fontSize:15, lineHeight:1.6, fontFamily:F, fontWeight:400, boxShadow:"0 2px 8px rgba(0,0,0,0.08)" };
 
@@ -213,7 +213,7 @@ const STAGE = { WELCOME:"welcome", LANDING:"landing", ENROLMENT:"enrolment", LIK
 
 const INTRO = [
   { pause: 600,  text: "Kia ora, I'm Tua! 👋" },
-  { pause: 2000, text: "Kiwis come to me to take the Yeah Nah Maybe quiz — to figure out which political parties they actually align with, based on 12 issues." },
+  { pause: 2000, text: "Kiwis come to me to take the Yeah Nah Maybe quiz to figure out which political parties they actually align with, based on 12 issues." },
   { pause: 1200, text: "It takes about 3 minutes if you're keen." },
 ];
 
@@ -312,7 +312,7 @@ export default function YeahNahMaybe() {
   function handleStart() {
     setLocked(true);
     push("user", "Yes, let's go!");
-    typeAndPush("Before we start — are you enrolled to vote? 🗳️", 700, () => {
+    typeAndPush("Before we start, are you enrolled to vote? 🗳️", 700, () => {
       setStage(STAGE.ENROLMENT);
       setLocked(false);
     });
@@ -489,8 +489,8 @@ export default function YeahNahMaybe() {
           <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 28px", minHeight:"100vh" }}>
             <div style={{ maxWidth:480, width:"100%", display:"flex", flexDirection:"column", alignItems:"flex-start", gap:0 }}>
               <div style={{ fontSize:13, fontWeight:400, color: theme.MID, fontFamily:F, letterSpacing:"0.04em", marginBottom:12 }}>New Zealand General Election 2026</div>
-              <h1 style={{ fontSize:56, fontWeight:900, color: theme.DARK, fontFamily:F, lineHeight:1, letterSpacing:"-2px", marginBottom:12 }}>Yeah Nah Maybe…</h1>
-              <p style={{ fontSize:13, fontWeight:400, color: theme.MID, fontFamily:F, lineHeight:1.5, marginBottom:32, maxWidth:360 }}>Work in progress — party scores and questions are still being refined.</p>
+              <h1 style={{ fontSize:56, fontWeight:900, color: theme.DARK, fontFamily:F, lineHeight:1, letterSpacing:"-2px", marginBottom:8 }}>Yeah Nah Maybe…</h1>
+              <div style={{ display:"inline-block", fontSize:12, fontWeight:700, color:theme.CHIP, fontFamily:F, letterSpacing:"0.08em", marginBottom:32, padding:"4px 10px", border:`1px solid ${theme.CHIP}`, borderRadius:20 }}>Beta</div>
 
               <div style={{ display:"flex", flexDirection:"row", alignItems:"flex-start", gap:8, marginBottom:8 }}>
                 <div style={{ width:40, height:40, borderRadius:"50%", background:ACCENT, flexShrink:0 }} />
@@ -625,11 +625,11 @@ export default function YeahNahMaybe() {
               <span style={{ fontSize:17, fontWeight:700 }}>About Yeah Nah Maybe</span>
               <button onClick={() => { setAboutClosing(true); setTimeout(() => { setShowAbout(false); setAboutClosing(false); }, 300); }} style={{ background:"none", border:"none", cursor:"pointer", color: theme.MID, fontSize:22, lineHeight:1, padding:4 }}>×</button>
             </div>
-            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Yeah Nah Maybe is a voter advice tool for New Zealand's 2026 general election. Tua, an AI tuatara, takes you through 12 issues and shows you which parties most closely match where you stand — based on their publicly stated positions.</p>
-            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>This is a work in progress. Party scores and questions may change as policies shift. The source code is public on GitHub so anyone can see how scoring works and suggest corrections.</p>
-            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>It was made by Thomas Le Bas, a Kiwi designer in London looking to help others get engaged in their future. No funding, no hidden agenda — just a belief that more people should have their say.</p>
+            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Yeah Nah Maybe is a voter advice tool for New Zealand's 2026 general election. Tua, an AI tuatara, takes you through 12 issues and shows you which parties most closely match where you stand, based on their publicly stated positions. It is in beta; it's still a work in progress.</p>
+            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Party scores, questions, and Tua's answers may change as policies shift. Treat your results as a starting point, not a final answer. The source code is public on GitHub so anyone can see how scoring works and suggest corrections.</p>
+            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>It was made by Thomas Le Bas, a Kiwi designer in London looking to help others get engaged in their future. No funding, no hidden agenda. Just a belief that more people should have their say.</p>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Demographic data and your results are collected to improve the tool. AI conversations may also be used to make Tua better. Your individual answers aren't stored, and nothing is linked to your identity.</p>
-            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:24 }}>Tua can make mistakes. If you haven't enrolled to vote yet, visit vote.nz — it takes a few minutes.</p>
+            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:24 }}>Tua can make mistakes. If you haven't enrolled to vote yet, visit vote.nz. It takes a few minutes.</p>
             <a href="https://vote.nz" target="_blank" rel="noopener noreferrer" style={{ display:"inline-block", background: ACCENT, color:"#fff", borderRadius:"20px", padding:"10px 22px", fontSize:15, fontWeight:600, fontFamily:F, textDecoration:"none" }}>Enrol to vote</a>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginTop:24, marginBottom:12 }}>Check out these other tools to help you out:</p>
             <a href="https://www.policy.nz" target="_blank" rel="noopener noreferrer" style={{ display:"inline-block", background: ACCENT, color:"#fff", borderRadius:"20px", padding:"10px 22px", fontSize:15, fontWeight:600, fontFamily:F, textDecoration:"none" }}>policy.nz</a>
