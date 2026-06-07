@@ -6,7 +6,7 @@ NZ 2026 general election voter-advice quiz: 12 policy statements, match % vs six
 
 - **React 19** (JSX, no TypeScript), **Vite 7** — SPA, no routing library
 - **Inline styles only** — no CSS files, no Tailwind, no CSS-in-JS
-- **Anthropic Messages API** — called directly from the browser via `fetch` (no backend/proxy)
+- **Anthropic Messages API** — proxied via Cloudflare Worker (`worker/`); browser calls `VITE_CHAT_API_URL`
 - **ESLint 9** flat config — only linter, no Prettier
 
 ## Commands
@@ -27,7 +27,7 @@ No test suite exists.
 Copy `vite-project/.env.example` → `vite-project/.env.local` and set:
 
 ```
-VITE_ANTHROPIC_API_KEY=sk-ant-...
+VITE_CHAT_API_URL=https://yeahnahmaybe-chat.<subdomain>.workers.dev
 ```
 
 ## Directory structure
@@ -53,7 +53,7 @@ yeahnahmaybe2026/
 - **Top-level constants** (`QUESTIONS`, `PARTY_DATA`, `SYSTEM_PROMPT`) are defined at module scope above the component.
 - **`window.storage`** is used for session analytics — this is a host-specific API (not standard `localStorage`) and silently no-ops on plain browsers. Do not replace with `localStorage`.
 - Party colours are design invariants — treat them like brand assets.
-- Calling Anthropic from the client is intentional for now; moving to a proxy is the planned hardening step.
+- Chat calls a Cloudflare Worker proxy; the Anthropic API key lives in Cloudflare secrets, not in the repo.
 
 ## Never modify directly
 

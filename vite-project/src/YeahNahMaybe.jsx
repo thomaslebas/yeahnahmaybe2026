@@ -400,6 +400,11 @@ export default function YeahNahMaybe() {
 
   async function sendChat(text) {
     if (!text.trim() || aiLoading) return;
+    const chatApiUrl = import.meta.env.VITE_CHAT_API_URL;
+    if (!chatApiUrl) {
+      push("app", "Chat is unavailable right now. The quiz and results still work.");
+      return;
+    }
     setLocked(true);
     push("user", text);
     setInput("");
@@ -408,7 +413,7 @@ export default function YeahNahMaybe() {
     setAiLoading(true);
     setTyping(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch(chatApiUrl, {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({
@@ -419,6 +424,9 @@ export default function YeahNahMaybe() {
         }),
       });
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error?.message || "Request failed");
+      }
       const reply = data.content ? data.content.map((b) => b.text||"").join("") : "Something went wrong.";
       setChatHistory([...newHistory, { role:"assistant", content:reply }]);
       setTyping(false);
@@ -481,7 +489,8 @@ export default function YeahNahMaybe() {
           <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 28px", minHeight:"100vh" }}>
             <div style={{ maxWidth:480, width:"100%", display:"flex", flexDirection:"column", alignItems:"flex-start", gap:0 }}>
               <div style={{ fontSize:13, fontWeight:400, color: theme.MID, fontFamily:F, letterSpacing:"0.04em", marginBottom:12 }}>New Zealand General Election 2026</div>
-              <h1 style={{ fontSize:56, fontWeight:900, color: theme.DARK, fontFamily:F, lineHeight:1, letterSpacing:"-2px", marginBottom:32 }}>Yeah Nah Maybe…</h1>
+              <h1 style={{ fontSize:56, fontWeight:900, color: theme.DARK, fontFamily:F, lineHeight:1, letterSpacing:"-2px", marginBottom:12 }}>Yeah Nah Maybe…</h1>
+              <p style={{ fontSize:13, fontWeight:400, color: theme.MID, fontFamily:F, lineHeight:1.5, marginBottom:32, maxWidth:360 }}>Work in progress — party scores and questions are still being refined.</p>
 
               <div style={{ display:"flex", flexDirection:"row", alignItems:"flex-start", gap:8, marginBottom:8 }}>
                 <div style={{ width:40, height:40, borderRadius:"50%", background:ACCENT, flexShrink:0 }} />
@@ -617,6 +626,7 @@ export default function YeahNahMaybe() {
               <button onClick={() => { setAboutClosing(true); setTimeout(() => { setShowAbout(false); setAboutClosing(false); }, 300); }} style={{ background:"none", border:"none", cursor:"pointer", color: theme.MID, fontSize:22, lineHeight:1, padding:4 }}>×</button>
             </div>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Yeah Nah Maybe is a voter advice tool for New Zealand's 2026 general election. Tua, an AI tuatara, takes you through 12 issues and shows you which parties most closely match where you stand — based on their publicly stated positions.</p>
+            <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>This is a work in progress. Party scores and questions may change as policies shift. The source code is public on GitHub so anyone can see how scoring works and suggest corrections.</p>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>It was made by Thomas Le Bas, a Kiwi designer in London looking to help others get engaged in their future. No funding, no hidden agenda — just a belief that more people should have their say.</p>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:16 }}>Demographic data and your results are collected to improve the tool. AI conversations may also be used to make Tua better. Your individual answers aren't stored, and nothing is linked to your identity.</p>
             <p style={{ fontSize:15, lineHeight:1.7, color: theme.MID, marginBottom:24 }}>Tua can make mistakes. If you haven't enrolled to vote yet, visit vote.nz — it takes a few minutes.</p>
